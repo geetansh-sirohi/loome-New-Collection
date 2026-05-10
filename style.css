@@ -36,7 +36,6 @@ body {
   flex: 0 0 45%;
 }
 
-/* FIXED: merged duplicate .hero-center blocks */
 .hero-center {
   flex: 0 0 45%;
   position: relative;
@@ -53,7 +52,7 @@ body {
   padding-top: 2rem;
 }
 
-/* Header */
+/* ── HEADER ── */
 header {
   display: flex;
   justify-content: space-between;
@@ -74,6 +73,7 @@ header {
   opacity: 0.6;
 }
 
+/* ── NAV ── */
 nav ul {
   margin-left: 2rem;
   font-family: monospace;
@@ -82,47 +82,99 @@ nav ul {
   gap: 2.2rem;
 }
 
+nav ul li {
+  position: relative;
+}
+
 nav ul li a {
   text-decoration: none;
   color: #202020;
   font-weight: 500;
   font-size: 0.7rem;
   opacity: 0.8;
-  transition: opacity 0.3s ease;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Sliding underline that grows from center on hover */
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0;
+  height: 1.5px;
+  background-color: #767E66;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 nav ul li a:hover {
   opacity: 1;
+  color: #767E66;
 }
 
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Active state — just color, no persistent underline */
+nav ul li a.active {
+  color: #767E66;
+  opacity: 1;
+}
+
+/* Remove the old .shop-line element — keep rule so it just hides if still in HTML */
+.shop-line {
+  display: none;
+}
+
+/* ── HEADER ICONS ── */
 .header-icons {
   display: flex;
   gap: 2rem;
-}
-
-.shop-line {
-  margin-left: 0.3rem;
-  width: 1rem;
-  height: 2px;
-  background-color: #767E66;
-  margin-top: 0.3rem;
+  align-items: center;
 }
 
 .cart-icon {
-  margin-top: 0.4rem;
+  position: relative;
   cursor: pointer;
   font-size: 1.6rem;
   font-weight: 100;
-  transition: opacity 0.3s ease;
+  color: #202020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  transition: color 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
 }
 
 .cart-icon:hover {
-  opacity: 0.6;
+  color: #767E66;
+  background-color: rgba(118, 126, 102, 0.1);
+  transform: scale(1.15);
+}
+
+/* Subtle bounce on the icon itself */
+.cart-icon:hover i {
+  animation: cartBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cartBounce {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-4px); }
+  70%  { transform: translateY(1px); }
+  100% { transform: translateY(0); }
 }
 
 .badge {
-  margin-left: 1.1rem;
   position: absolute;
+  top: -4px;
+  right: -4px;
   background-color: #767E66;
   color: white;
   font-size: 0.5rem;
@@ -133,19 +185,34 @@ nav ul li a:hover {
   align-items: center;
   justify-content: center;
   font-weight: 200;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cart-icon:hover .badge {
+  transform: scale(1.2);
 }
 
 .menu-icon {
-  margin-top: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  color: #202020;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 8px;
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }
 
 .menu-icon:hover {
-  opacity: 0.6;
+  color: #767E66;
+  background-color: rgba(118, 126, 102, 0.1);
+  transform: rotate(90deg);
 }
 
+/* ── HERO LEFT ── */
 .leaf-logo {
   width: 30px;
   height: 30px;
@@ -218,17 +285,9 @@ nav ul li a:hover {
   opacity: 0.85;
 }
 
-.green {
-  background-color: #767E66;
-}
-
-.beige {
-  background-color: #E9E2DB;
-}
-
-.pink {
-  background-color: #E7B5B5;
-}
+.green  { background-color: #767E66; }
+.beige  { background-color: #E9E2DB; }
+.pink   { background-color: #E7B5B5; }
 
 .details-header {
   font-size: 0.8rem;
@@ -295,6 +354,7 @@ nav ul li a:hover {
   background-color: #D6D0C9;
 }
 
+/* ── HERO CENTER ── */
 .hero-image {
   height: 27rem;
   border-radius: 10px;
@@ -411,8 +471,7 @@ nav ul li a:hover {
   background-color: rgb(74, 74, 74);
 }
 
-/* Hero Right Gallery */
-
+/* ── HERO RIGHT GALLERY ── */
 .gallery {
   margin-left: -4rem;
   margin-top: -4rem;
@@ -454,8 +513,7 @@ nav ul li a:hover {
   transform: scale(1.08);
 }
 
-/* Bottom Bar */
-
+/* ── BOTTOM BAR ── */
 .bottom-bar-container {
   display: flex;
   justify-content: center;
@@ -555,7 +613,6 @@ nav ul li a:hover {
     margin-left: 0;
     margin-top: 2rem;
     margin-bottom: 4rem;
-
   }
 
   .bottom-bar {
@@ -565,19 +622,15 @@ nav ul li a:hover {
 
 /* ── MOBILE (≤ 768px) ── */
 @media (max-width: 768px) {
-
-  /* --- CONTAINER --- */
   .container {
     margin: 0;
     padding: 1.2rem 1rem;
   }
 
-  /* --- HEADER --- */
   header {
     margin-bottom: 1.5rem;
   }
 
-  /* Hide full nav on mobile */
   header nav {
     display: none;
   }
@@ -590,22 +643,18 @@ nav ul li a:hover {
     gap: 1.2rem;
   }
 
-  /* --- HERO: stack to single column --- */
   .hero {
     flex-direction: column;
     gap: 0;
     align-items: stretch;
   }
 
-  /* Hide left content panel (shown below image on mobile) */
   .hero-left {
     flex: unset;
     order: 2;
-    /* comes AFTER the image */
     padding-top: 1.2rem;
   }
 
-  /* Center image takes full width */
   .hero-center {
     flex: unset;
     order: 1;
@@ -613,12 +662,10 @@ nav ul li a:hover {
     width: 100%;
   }
 
-  /* Hide vertical rotated text */
   .vertical-text {
     display: none;
   }
 
-  /* --- MAIN IMAGE --- */
   .main-image-container {
     position: relative;
     width: 100%;
@@ -629,12 +676,10 @@ nav ul li a:hover {
   .hero-image {
     width: 100%;
     height: 75vw;
-    /* keeps nice aspect ratio */
     object-fit: cover;
     border-radius: 20px;
   }
 
-  /* Price & rating stay on image */
   .price-tag {
     left: 0.8rem;
     top: 0.8rem;
@@ -650,7 +695,6 @@ nav ul li a:hover {
     gap: 0.5rem;
   }
 
-  /* Add to bag: full-width pill button at bottom of screen (sticky) */
   .add-to-bag {
     position: fixed;
     bottom: 1.2rem;
@@ -672,7 +716,6 @@ nav ul li a:hover {
     margin-top: 0;
   }
 
-  /* Price inside button — shown via ::after pseudo */
   .add-to-bag::after {
     content: "$488";
     font-size: 0.95rem;
@@ -681,14 +724,12 @@ nav ul li a:hover {
     padding-right: 0.5rem;
   }
 
-  /* --- NEW COLLECTION badge --- */
   .new-collection {
     position: static;
     margin-bottom: 0.6rem;
     margin-top: 0;
   }
 
-  /* --- HERO LEFT CONTENT --- */
   .hero-left h1 {
     font-size: 3rem;
     margin-bottom: 0.8rem;
@@ -704,7 +745,6 @@ nav ul li a:hover {
 
   .description br {
     display: none;
-    /* let text wrap naturally on mobile */
   }
 
   .colors-section {
@@ -720,16 +760,13 @@ nav ul li a:hover {
     display: none;
   }
 
-  /* Hero features row */
   .hero-footer-features {
     margin-top: 0;
     gap: 1rem;
     justify-content: center;
     margin-bottom: 2rem;
-    /* space for sticky button */
   }
 
-  /* --- RIGHT GALLERY: horizontal strip below main image --- */
   .hero-right {
     flex: unset;
     order: 3;
@@ -759,10 +796,8 @@ nav ul li a:hover {
   .gallery-item.active,
   .gallery-item:hover {
     transform: translateY(-4px);
-    /* lift instead of translateX */
   }
 
-  /* --- BOTTOM BAR --- */
   .bottom-bar-container {
     width: 100%;
     margin-left: 0;
@@ -781,7 +816,6 @@ nav ul li a:hover {
 
   .bar-line {
     display: none;
-    /* separators look bad on wrapping layout */
   }
 
   .bar-item {
